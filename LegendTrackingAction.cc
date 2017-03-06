@@ -112,14 +112,15 @@ void LegendTrackingAction::PostUserTrackingAction(const G4Track* aTrack){
   
   if(aTrack->GetDefinition() ==G4OpticalPhoton::OpticalPhotonDefinition()){
     if(creator && creator->GetProcessName()!= "Scintillation") 
-      G4cout<<"LegendTrackingAction.cc:: "<<"Optical Photon Creation Process that is not Scintillation is:: "<<creator->GetProcessName()<<G4endl;
+   //   G4cout<<"LegendTrackingAction.cc:: "<<"Optical Photon Creation Process that is not Scintillation is:: "<<creator->GetProcessName()<<G4endl;
     if(creator && creator->GetProcessName() ==  "Scintillation"){
       G4double KE = aTrack->GetTotalEnergy();//Returns energy in MeV
       //G4double KE = aTrack->GetKineticEnergy();//Returns energy in MeV
       //LAr_Spectrum->Fill(KE);
       if(trackInformation->GetTrackStatus()&absorbed){
         hTrackPhotonE->Fill(KE);
-		    trajectory->SetDrawTrajectory(true);
+        if(KE>6.1992*keV)
+  		    trajectory->SetDrawTrajectory(true);
       }
     }
 	}

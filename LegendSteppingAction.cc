@@ -113,7 +113,7 @@ void LegendSteppingAction::UserSteppingAction(const G4Step * theStep){
       if((*pv)[i]->GetProcessName()=="OpBoundary" )
       {
         boundary = (G4OpBoundaryProcess*)(*pv)[i];
-        G4cout<<"The Boundry status is ::"<<boundary->GetStatus()<<"\n\t0:Undefined\n\t9:Absorption \n\t10:Detectoin \n\t11:NotAtBoundry"<<G4endl;
+        G4cout<<"The Boundry status is ::"<<boundary->GetStatus()<<"\n\t0:Undefined\n\t1::Transmission\n\t2::FresnelRefraction\n\t3::FresnelReflection\n\t4::TotalInternalReflection\n\t5::LambertianReflection\n\t6::LobeReflection\n\t7::SpikeReflection\n\t8::BackScattering\n\t9:Absorption \n\t10:Detectoin \n\t11:NotAtBoundry \n\t12::SameMaterial\n\t13::StepTooSmall\n\t14::NoRINDEX"<<G4endl;
         break;
       }
     }
@@ -162,10 +162,10 @@ void LegendSteppingAction::UserSteppingAction(const G4Step * theStep){
   if(particleType==G4OpticalPhoton::OpticalPhotonDefinition())
   {
     //Optical photon only
-    if(thePrePV->GetName()!="phy_ScintSlab" && thePrePV->GetName()!="phy_fillGas"){
-      G4cout<<"The Pre PV Name:: "<<thePrePV->GetName()<<G4endl;
+    if(thePrePV->GetName()!="phys_WLSCylinderPhysical" && thePrePV->GetName()!="phy_fillGas"){
+      G4cout<<"LegendSteppingAction:: The Pre PV Name:: "<<thePrePV->GetName()<<G4endl;
     }
-    if(thePrePV->GetName()=="phy_ScintSlab"){
+    if(thePrePV->GetName()=="phys_WLSCylinderPhysical"){
       //force drawing of photons in WLS slab
       //G4cout<<"A photon hit the WLS slab names phy_ScintSlab"<<G4endl;
       trackInformation->SetForceDrawTrajectory(true);
@@ -198,6 +198,12 @@ void LegendSteppingAction::UserSteppingAction(const G4Step * theStep){
       {
         if(boundaryStatus!=StepTooSmall)
         {
+          G4cout<<"LegendSteppingAction::StepTooSmall = "<<StepTooSmall<<G4endl;
+          G4cout<<"LegendSteppingAction::boundaryStatus = "<<boundaryStatus<<G4endl;
+          G4cout<<"LegendSteppingAction:: Track energy is = "<<theTrack->GetKineticEnergy()<<G4endl;
+          G4cout<<"LegendSteppinAction:: thePrePV of Process is :: "<< thePrePV->GetName()<<G4endl;
+          G4cout<<"LegendSteppinAction:: thePostPV of Process is :: "<< thePostPV->GetName()<<G4endl;
+          
           G4ExceptionDescription ed;
           ed << "LegendSteppingAction::UserSteppingAction(): "
                 << "No reallocation step after reflection!"

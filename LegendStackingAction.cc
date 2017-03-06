@@ -73,7 +73,7 @@ LegendStackingAction::ClassifyNewTrack(const G4Track * aTrack){
       }
       else if(aTrack->GetCreatorProcess()->GetProcessName()=="Cerenkov")
         eventInformation->IncPhotonCount_Ceren();
-      else G4cout<<"Creator Process is ::"<<aTrack->GetCreatorProcess()->GetProcessName()<<G4endl;
+     //else G4cout<<"Creator Process is ::"<<aTrack->GetCreatorProcess()->GetProcessName()<<G4endl;
     }
   }
  // else{
