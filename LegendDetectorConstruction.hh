@@ -44,6 +44,8 @@
 #include "G4Element.hh"
 #include "G4Torus.hh"
 #include "G4UnionSolid.hh"
+//#include "G4Colour.hh"
+#include "G4VisAttributes.hh"
 
 #include "G4LogicalSkinSurface.hh"
 #include "G4LogicalBorderSurface.hh"
@@ -106,6 +108,21 @@ class LegendDetectorConstruction : public G4VUserDetectorConstruction
     }
     TDirectory *fDir;
     TH1F *hDetecWLSPhotonE;
+
+
+  /// Define some colors that will be used later
+  //visualization attributes
+  /*G4Colour lgreen (0.0,  0.4, 0.0) ;
+  G4Colour lblue  (0.0,  0.0, 0.4) ;
+  G4Colour llblue (0.,  0.0, 0.04) ;
+  G4Colour blue_gray  (175/255. ,157/255. ,189/255. ) ;
+  G4Colour red    (1,  0.0, 0.0);
+  G4Colour lred   (0.4,  0.0, 0.0);
+  G4Colour light_gray(214./255.,214./255.,214./255.);
+  G4Colour dark_gray(135./255.,135./255.,135./255.);
+*/
+//  Not sure why colours won't work. Something wrong in the declaration  G4Colour lgreen (0.0,  0.4, 0.0) ;
+
   private:
     static const G4double LambdaE;
     TFile *tpbFile;
@@ -153,6 +170,7 @@ class LegendDetectorConstruction : public G4VUserDetectorConstruction
     G4LogicalVolume* logical_Rock;
     G4LogicalVolume* logical_DetGeCrystal;
     G4LogicalVolume* logical_innerVessel;
+    G4LogicalVolume* logical_wls;
 
     //Physical Volume: Get Physical
     G4VPhysicalVolume* physical_Rock;
@@ -162,13 +180,17 @@ class LegendDetectorConstruction : public G4VUserDetectorConstruction
     G4VPhysicalVolume* physical_Photocath;
     G4VPhysicalVolume* physical_ScintSlab;
     G4VPhysicalVolume* physical_fillGas;
+    G4VPhysicalVolume* physical_wls;
+    
+    //Surface Objects
     G4LogicalSkinSurface *  skin_copper;
     G4LogicalSkinSurface *  skin_photocath;
     G4LogicalSkinSurface* fSkin_WLS;
     G4OpticalSurface* fWLSoptSurf;
     G4OpticalSurface* fPMTGlassOptSurface;
-    
-    //Sensitive Detectors
+    G4LogicalBorderSurface * wls_LogicalInnerSuface ;
+    G4LogicalBorderSurface * wls_LogicalOuterSurface ;
+        //Sensitive Detectors
 		G4Cache<LegendScintSD*> Scint_SD;
     G4Cache<LegendPMTSD*> Pmt_SD ;
 
